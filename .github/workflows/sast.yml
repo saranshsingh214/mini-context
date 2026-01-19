@@ -1,0 +1,23 @@
+name: AccuKnox SAST Scan Workflow
+
+on:
+  push:
+    branches:
+      - sast
+  pull_request:
+
+jobs:
+  sast_scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: AccuKnox SAST Scan (Opengrep)
+        uses: accuknox/sast-scan-opengrep-action@1.0.0
+        with:
+          accuknox_token: ${{ secrets.ACCUKNOX_TOKEN }}
+          accuknox_endpoint: ${{ secrets.ACCUKNOX_ENDPOINT }}
+          accuknox_label: sast-python-scan
+          input_soft_fail: true
